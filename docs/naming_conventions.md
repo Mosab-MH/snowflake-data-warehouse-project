@@ -63,11 +63,6 @@ This document outlines the naming conventions used for schemas, tables, views, c
   - `_key`: A suffix indicating that this column is a surrogate key.  
   - Example: `customer_key` → Surrogate key in the `dim_customers` table.
   
-### **Technical Columns**
-- All technical columns must start with the prefix `dwh_`, followed by a descriptive name indicating the column's purpose.
-- **`dwh_<column_name>`**  
-  - `dwh`: Prefix exclusively for system-generated metadata.  
-  - `<column_name>`: Descriptive name indicating the column's purpose.  
-  - Example: `dwh_load_date` → System-generated column used to store the date when the record was loaded.
+
  
 

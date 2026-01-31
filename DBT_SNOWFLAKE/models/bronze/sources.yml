@@ -1,7 +1,7 @@
 sources:
   - name: bronze
     database: datawarehous
-    schema: dbt_schema
+    schema: bronze
     tables:
     - name: crm_cust_info
     - name: crm_prd_info

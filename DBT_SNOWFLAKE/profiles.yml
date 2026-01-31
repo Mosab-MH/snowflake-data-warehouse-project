@@ -1,14 +1,13 @@
 DBT_SNOWFLAKE:
+  target: dev
   outputs:
     dev:
+      type: snowflake
+      threads: 16
       account: BAEGDNB-UOB31263
+      user: MOSAB
       database: DATAWAREHOUS
+      warehouse: COMPUTE_WH
+      schema: dbt_schema
       password: 0113575575@MAx
       role: ACCOUNTADMIN
-      schema: dbt_schema
-      threads: 4
-      type: snowflake
-      user: MOSAB
-      warehouse: COMPUTE_WH
-  target: dev
-

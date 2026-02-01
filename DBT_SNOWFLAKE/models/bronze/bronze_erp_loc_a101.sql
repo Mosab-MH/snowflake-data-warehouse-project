@@ -1,5 +1,5 @@
  
  select * 
- from {{ source('bronze', 'erp_loc_a101') }}
+ from {{ source('raw', 'erp_loc_a101') }}
  
     

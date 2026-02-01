@@ -1,8 +1,9 @@
-
 name: 'DBT_SNOWFLAKE'
 version: '1.0.0'
 
+
 profile: 'DBT_SNOWFLAKE'
+
 
 model-paths: ["models"]
 analysis-paths: ["analyses"]
@@ -11,13 +12,21 @@ seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
-clean-targets:         # directories to be removed by `dbt clean`
+clean-targets:        
   - "target"
   - "dbt_packages"
 
 
+
 models:
   DBT_SNOWFLAKE:
-    # Config indicated by + and applies to all files under models/example/
+  
     bronze:
-      +materialized: view
+      +materialized: table  
+      +schema: bronze
+    silver:
+      +materialized: table  
+      +schema: silver
+    gold:
+      +materialized: view  
+      +schema: gold

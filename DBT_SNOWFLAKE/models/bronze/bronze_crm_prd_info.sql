@@ -1,4 +1,4 @@
 
      select *
-     from {{ source('bronze', 'crm_prd_info') }}
+     from {{ source('raw', 'crm_prd_info') }}
     

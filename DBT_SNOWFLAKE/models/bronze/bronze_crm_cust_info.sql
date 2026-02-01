@@ -1,5 +1,5 @@
 
  select * 
- from {{ source('bronze', 'crm_cust_info') }}
+ from {{ source('raw', 'crm_cust_info') }}
 
     

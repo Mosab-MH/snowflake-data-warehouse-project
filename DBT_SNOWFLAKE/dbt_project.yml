@@ -22,4 +22,11 @@ models:
   DBT_SNOWFLAKE:
   
     bronze:
-      +materialized: table
+      +materialized: table  
+      +schema: bronze
+    silver:
+      +materialized: table  
+      +schema: silver
+    gold:
+      +materialized: view  
+      +schema: gold

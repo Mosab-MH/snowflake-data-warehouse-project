@@ -1,6 +1,6 @@
 
  select *
- from {{ source('bronze', 'erp_cust_az12') }}
+ from {{ source('raw', 'erp_cust_az12') }}
 
 
     

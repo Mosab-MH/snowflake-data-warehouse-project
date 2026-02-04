@@ -1,7 +1,6 @@
 
 
 SELECT 
-
 CASE 
     WHEN CID LIKE 'NAS%' THEN SUBSTRING(CID, 4, LEN(CID))
     ELSE CID
@@ -14,5 +13,6 @@ CASE
         WHEN  UPPER(TRIM(GEN)) IN ('F' ,'FEMALE') THEN 'Female'
         WHEN  UPPER(TRIM(GEN)) IN ('M' ,'MALE') THEN 'Male'
         ELSE 'n/a'
-        END AS GEN
+        END AS GEN,
+        CURRENT_TIMESTAMP() AS dwh_create_date
 FROM {{ ref('bronze_erp_cust_az12') }}

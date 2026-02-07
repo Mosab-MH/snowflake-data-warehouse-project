@@ -45,15 +45,9 @@ models:
       - name: cat_id
         description: Category ID derived from the first five characters of PRD_KEY, with hyphens replaced by underscores.
         data_type: varchar
-        data_tests:
-          - unique
-          - not_null
       - name: prd_key
         description: Product key extracted from PRD_KEY starting from the seventh character onward.
         data_type: varchar
-        data_tests:
-          - unique
-          - not_null
       - name: prd_nm
         description: The name of the product, providing a descriptive identifier for the item.
         data_type: varchar

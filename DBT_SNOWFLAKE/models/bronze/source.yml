@@ -1,5 +1,4 @@
 version: 2
-
 sources:
   - name: raw
     database: datawarehous
@@ -11,3 +10,52 @@ sources:
       - name: erp_px_cat_g1v2
       - name: erp_loc_a101
       - name: erp_cust_az12
+models:
+  - name: bronze_crm_cust_info
+    description: Staging table containing customer information from the raw CRM data source, including ID, key, name, marital status, gender, and account creation date.
+    columns:
+      - name: cst_id
+        description: Unique identifier for the customer in the CRM system.
+        data_type: number
+      - name: cst_key
+        description: A unique key associated with the customer, used for internal reference.
+        data_type: varchar
+      - name: cst_firstname
+        description: The first name of the customer.
+        data_type: varchar
+      - name: cst_lastname
+        description: The last name of the customer, used for identification and personalization purposes.
+        data_type: varchar
+      - name: cst_marital_status
+        description: The marital status of the customer, indicating whether they are single, married, divorced, etc.
+        data_type: varchar
+      - name: cst_gndr
+        description: The gender of the customer, typically represented as male, female, or other.
+        data_type: varchar
+      - name: cst_create_date
+        description: The date when the customer record was created in the CRM system.
+        data_type: date
+  - name: bronze_crm_prd_info
+    description: Staging model that selects all columns from the raw CRM product information table to standardize and prepare data for further analysis.
+    columns:
+      - name: prd_id
+        description: Unique identifier for the product.
+        data_type: number
+      - name: prd_key
+        description: Key or code associated with the product for reference purposes.
+        data_type: varchar
+      - name: prd_nm
+        description: Name of the product.
+        data_type: varchar
+      - name: prd_cost
+        description: Represents the cost of the product. This is a numeric value indicating the price or expense associated with the product.
+        data_type: number
+      - name: prd_line
+        description: Indicates the product line or category to which the product belongs. This is a textual value providing classification information.
+        data_type: varchar
+      - name: prd_start_dt
+        description: Specifies the start date when the product became available or active. This is a timestamp without timezone.
+        data_type: timestamp_ntz
+      - name: prd_end_dt
+        description: The timestamp indicating the end date of the product's availability or lifecycle.
+        data_type: timestamp_ntz

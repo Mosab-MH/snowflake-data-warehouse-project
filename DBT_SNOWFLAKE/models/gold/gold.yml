@@ -1,0 +1,40 @@
+models:
+  - name: dim_customer
+    description: The dim_customer model consolidates customer data from various sources to provide a unified view, including demographic details, metadata, and enriched gender information.
+    columns:
+      - name: customer_key
+        description: A unique identifier for each customer, generated using a row number based on the order of customer IDs.
+        data_type: number
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: The unique ID of the customer sourced from the CRM system.
+        data_type: number
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_number
+        description: The unique customer number assigned to the customer in the ERP system.
+        data_type: varchar
+      - name: first_name
+        description: The first name of the customer as recorded in the CRM system.
+        data_type: varchar
+      - name: last_name
+        description: The last name of the customer as recorded in the CRM system.
+        data_type: varchar
+      - name: country
+        description: The country associated with the customer, derived from the ERP location data.
+        data_type: varchar
+      - name: marital_status
+        description: Indicates the marital status of the customer, such as single, married, or divorced, as sourced from the CRM system.
+        data_type: varchar
+      - name: gender
+        description: Represents the gender of the customer. If the gender is 'Unknown' in the CRM system, it is replaced with the value from the ERP system or set to 'n/a' if unavailable.
+        data_type: varchar
+      - name: birthdate
+        description: The date of birth of the customer, sourced from the ERP system.
+        data_type: date
+      - name: create_date
+        description: The date when the customer record was created in the CRM system.
+        data_type: date

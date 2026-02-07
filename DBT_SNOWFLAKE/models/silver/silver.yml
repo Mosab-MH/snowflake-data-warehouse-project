@@ -1,0 +1,159 @@
+version: 2
+models:
+  - name: silver_crm_cust_info
+    description: The silver_crm_cust_info model processes customer information from the bronze layer, ensuring data quality and consistency. It selects the most recent record for each customer based on CST_CREATE_DATE, trims whitespace from names, standardizes marital status and gender values, and adds a timestamp for data warehouse creation. This model serves as a refined and reliable source for customer data in the silver layer.
+    columns:
+      - name: cst_id
+        description: Unique identifier for the customer. This column ensures each customer is distinctly recognized within the dataset.
+        data_type: number
+        data_tests:
+          - unique
+          - not_null
+      - name: cst_key
+        description: A unique key associated with the customer, used for mapping or linking customer records across systems.
+        data_type: varchar
+        data_tests:
+          - not_null
+          - unique
+      - name: cst_firstname
+        description: The first name of the customer, trimmed to remove any leading or trailing spaces.
+        data_type: varchar
+      - name: cst_lastname
+        description: The last name of the customer, trimmed to remove any leading or trailing spaces.
+        data_type: varchar
+      - name: cst_marital_status
+        description: The marital status of the customer, standardized to 'Single', 'Married', or 'N/A' based on the input values.
+        data_type: varchar
+      - name: cst_gndr
+        description: The gender of the customer, standardized to 'Male', 'Female', or 'Unknown' based on the input values.
+        data_type: varchar
+      - name: cst_create_date
+        description: The date when the customer record was originally created in the source system.
+        data_type: date
+      - name: dwh_create_date
+        description: The timestamp indicating when the record was created or processed in the data warehouse.
+        data_type: timestamp_ltz
+  - name: silver_crm_prd_info
+    description: The silver_crm_prd_info model processes product information from the bronze layer, transforming and enriching the data for analytical purposes. It includes product details such as ID, name, cost, category, and line type, along with calculated start and end dates for product availability. The model also ensures data consistency and provides a timestamp for data warehouse creation.
+    columns:
+      - name: prd_id
+        description: Unique identifier for the product.
+        data_type: number
+        data_tests:
+          - unique
+          - not_null
+      - name: cat_id
+        description: Category ID derived from the first five characters of PRD_KEY, with hyphens replaced by underscores.
+        data_type: varchar
+        data_tests:
+          - unique
+          - not_null
+      - name: prd_key
+        description: Product key extracted from PRD_KEY starting from the seventh character onward.
+        data_type: varchar
+        data_tests:
+          - unique
+          - not_null
+      - name: prd_nm
+        description: The name of the product, providing a descriptive identifier for the item.
+        data_type: varchar
+      - name: prd_cost
+        description: The cost of the product. If the cost is not available, it defaults to 0.
+        data_type: number
+      - name: prd_line
+        description: The category of the product line, derived from the PRD_LINE column. It maps codes ('M', 'R', 'T', 'S') to descriptive labels such as 'Mountain', 'Road', 'Touring', and 'Other Sales'. If the value is unrecognized, it defaults to 'n/a'.
+        data_type: varchar
+      - name: prd_start_dt
+        description: The start date of the product's availability, cast as a DATE type from the source data.
+        data_type: date
+      - name: prd_end_dt
+        description: The end date of the product's availability, calculated as one day before the start date of the next product in the same category, cast as a DATE type.
+        data_type: date
+      - name: dwh_create_date
+        description: The timestamp indicating when the record was created in the data warehouse, generated using the CURRENT_TIMESTAMP() function.
+        data_type: timestamp_ltz
+  - name: silver_crm_sales_details
+    description: The silver_crm_sales_details model processes and transforms raw sales data from the bronze layer into a refined format. It ensures data quality by handling invalid dates and recalculating sales and price values when necessary. This model is designed to provide accurate and clean sales details for further analysis and reporting.
+    columns:
+      - name: sls_ord_num
+        description: Represents the unique identifier for a sales order.
+        data_type: varchar
+      - name: sls_prd_key
+        description: Denotes the unique key associated with a product in the sales order.
+        data_type: varchar
+      - name: sls_cust_id
+        description: Identifies the customer associated with the sales order.
+        data_type: number
+      - name: sls_order_dt
+        description: The date when the order was placed. If the value is invalid (e.g., zero or incorrect length), it is set to NULL.
+        data_type: date
+      - name: sls_ship_dt
+        description: The date when the order was shipped. If the value is invalid (e.g., zero or incorrect length), it is set to NULL.
+        data_type: date
+      - name: sls_due_dt
+        description: The due date for the order delivery. If the value is invalid (e.g., zero or incorrect length), it is set to NULL.
+        data_type: date
+      - name: sls_sales
+        description: Represents the total sales amount for a transaction. If the original value is null, less than or equal to zero, or does not match the product of quantity and absolute price, it is recalculated as the product of quantity and absolute price.
+        data_type: number
+      - name: sls_quantity
+        description: Indicates the number of items sold in a transaction. This value is used to calculate the sales amount and price adjustments if necessary.
+        data_type: number
+      - name: sls_price
+        description: Represents the price per unit of the product sold. If the original value is null or less than or equal to zero, it is recalculated as the sales amount divided by the quantity, ensuring a valid price is derived.
+        data_type: number
+      - name: dwh_create_date
+        description: The timestamp indicating when the record was created in the data warehouse.
+        data_type: timestamp_ltz
+  - name: silver_erp_cust_az12
+    description: The silver_erp_cust_az12 model processes customer data from the bronze_erp_cust_az12 table in the DATAWAREHOUS.bronze schema. It standardizes customer IDs by removing the 'NAS' prefix, filters out invalid birth dates, categorizes gender into 'Male', 'Female', or 'n/a', and adds a timestamp indicating the creation date in the data warehouse.
+    columns:
+      - name: cid
+        description: Customer ID, transformed to remove the 'NAS' prefix if present.
+        data_type: varchar
+        data_tests:
+          - not_null
+      - name: bdate
+        description: Birth date of the customer, set to NULL if the date is in the future.
+        data_type: date
+      - name: gen
+        description: Gender of the customer, standardized to 'Female', 'Male', or 'n/a' based on input values.
+        data_type: varchar
+      - name: dwh_create_date
+        description: The timestamp indicating when the record was created in the data warehouse.
+        data_type: timestamp_ltz
+  - name: silver_erp_loc_a101
+    description: The silver_erp_loc_a101 model processes data from the bronze_erp_loc_a101 table in the DATAWAREHOUS.bronze schema. It cleans and transforms the data by removing dashes from the CID column, standardizing country names in the CNTRY column, and adding a timestamp for data warehouse creation. This model is part of the silver layer, which prepares data for further analysis and reporting.
+    columns:
+      - name: cid
+        description: A cleaned version of the customer ID, where hyphens are removed.
+        data_type: varchar
+        data_tests:
+          - not_null
+      - name: cntry
+        description: The country name derived from the CNTRY column in the source data, standardized to full names or 'n/a' for missing values.
+        data_type: varchar
+      - name: dwh_create_date
+        description: The timestamp indicating when the record was created in the data warehouse.
+        data_type: timestamp_ltz
+  - name: silver_erp_px_cat_g1v2
+    description: The silver_erp_px_cat_g1v2 model transforms data from the bronze_erp_px_cat_g1v2 table in the bronze schema of the DATAWAREHOUS database. It selects key columns such as ID, CAT, SUBCAT, and MAINTENANCE, and adds a new column, dwh_create_date, which captures the timestamp of when the data is processed. This model is part of the silver layer, designed to provide cleaned and structured data for further analysis.
+    columns:
+      - name: id
+        description: Unique identifier for each record in the dataset.
+        data_type: varchar
+        data_tests:
+          - unique
+          - not_null
+      - name: cat
+        description: Represents the primary category classification of the data.
+        data_type: varchar
+      - name: subcat
+        description: Represents the secondary or sub-category classification within the primary category.
+        data_type: varchar
+      - name: maintenance
+        description: Indicates the maintenance status or category associated with the record.
+        data_type: varchar
+      - name: dwh_create_date
+        description: Timestamp indicating when the record was created in the data warehouse.
+        data_type: timestamp_ltz

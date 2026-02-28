@@ -1,112 +1,149 @@
 models:
+
   - name: dim_customers
-    description: The dim_customer model consolidates customer data from various sources to provide a unified view, including demographic details, metadata, and enriched gender information.
+    description: The dim_customers model consolidates customer data from CRM and ERP systems to provide a unified and enriched customer view.
+
     columns:
       - name: customer_key
-        description: A unique identifier for each customer, generated using a row number based on the order of customer IDs.
+        description: Surrogate primary key uniquely identifying each customer.
         data_type: number
         data_tests:
           - unique
           - not_null
+
       - name: customer_id
-        description: The unique ID of the customer sourced from the CRM system.
+        description: Business identifier of the customer from the CRM system.
         data_type: number
         data_tests:
           - unique
           - not_null
+
       - name: customer_number
-        description: The unique customer number assigned to the customer in the ERP system.
+        description: Customer number from the ERP system.
         data_type: varchar
+
       - name: first_name
-        description: The first name of the customer as recorded in the CRM system.
+        description: Customer's first name.
         data_type: varchar
+
       - name: last_name
-        description: The last name of the customer as recorded in the CRM system.
+        description: Customer's last name.
         data_type: varchar
+
       - name: country
-        description: The country associated with the customer, derived from the ERP location data.
+        description: Country associated with the customer.
         data_type: varchar
+
       - name: marital_status
-        description: Indicates the marital status of the customer, such as single, married, or divorced, as sourced from the CRM system.
+        description: Marital status of the customer.
         data_type: varchar
+
       - name: gender
-        description: Represents the gender of the customer. If the gender is 'Unknown' in the CRM system, it is replaced with the value from the ERP system or set to 'n/a' if unavailable.
+        description: Gender of the customer enriched from CRM and ERP.
         data_type: varchar
+
       - name: birthdate
-        description: The date of birth of the customer, sourced from the ERP system.
+        description: Date of birth of the customer.
         data_type: date
+
       - name: create_date
-        description: The date when the customer record was created in the CRM system.
+        description: Record creation date in CRM.
         data_type: date
+
+
   - name: dim_products
-    description: The dim_products model is a dimensional table that provides detailed information about products. It combines data from the CRM product information and ERP category tables to create a comprehensive view of product attributes, including product ID, name, category, subcategory, maintenance status, cost, product line, and start date. The model filters out products with an end date and assigns a unique key to each product for identification.
+    description: The dim_products model provides detailed product attributes enriched with category information.
+
     columns:
-      - name: proudact_key
-        description: A unique sequential key generated for each product based on its start date and product key.
+      - name: product_key
+        description: Surrogate primary key uniquely identifying each product.
         data_type: number
-        data_tests:
-          - unique
-          - not_null
-      - name: proudact_id
-        description: The unique identifier for the product sourced from the CRM system.
+
+      - name: product_id
+        description: Business identifier of the product from CRM.
         data_type: number
-        data_tests:
-          - unique
-          - not_null
-      - name: proudact_number
-        description: The product number representing the key identifier for the product in the ERP system.
+
+      - name: product_number
+        description: ERP product number.
         data_type: varchar
-      - name: proudact_name
-        description: The name of the product as recorded in the CRM system.
+
+      - name: product_name
+        description: Name of the product.
         data_type: varchar
+
       - name: category_id
-        description: The unique identifier for the category to which the product belongs.
+        description: Identifier of the product category.
         data_type: varchar
+
       - name: category
-        description: The name of the category associated with the product, providing a classification for grouping similar products.
+        description: Category name of the product.
         data_type: varchar
+
       - name: subcategory
-        description: Represents the specific subcategory within the broader product category, providing further classification of the product.
+        description: Subcategory classification of the product.
         data_type: varchar
+
       - name: maintenance
-        description: Indicates whether the product requires maintenance or upkeep, and may include details about the type or frequency of maintenance.
+        description: Indicates whether the product requires maintenance.
         data_type: varchar
+
       - name: cost
-        description: Denotes the monetary value or expense associated with the product, typically representing its production or acquisition cost.
+        description: Production or acquisition cost of the product.
         data_type: number
+
       - name: product_line
-        description: Indicates the specific product line to which the product belongs, providing a categorization for grouping similar products.
+        description: Product line classification.
         data_type: varchar
+
       - name: start_date
-        description: Represents the date when the product became active or available in the system.
+        description: Product activation date.
         data_type: date
+
+
   - name: fact_sales
-    description: The fact_sales model aggregates sales data from the silver_crm_sales_details table and enriches it with product and customer information from the dim_proudacts and dim_customers tables respectively. It provides detailed insights into sales transactions, including order details, shipping and due dates, sales amounts, quantities, and pricing.
+    description: The fact_sales model captures transactional sales data enriched with customer and product dimensions.
+
     columns:
       - name: order_number
-        description: Unique identifier for each sales order, sourced from the sales details table.
+        description: Unique identifier of the sales order.
         data_type: varchar
-      - name: proudact_key
-        description: Unique key representing a product, sourced from the product dimension table.
+        data_tests:
+          - not_null
+
+      - name: product_key
+        description: Foreign key referencing dim_products.
         data_type: number
+
       - name: customer_key
-        description: Unique key representing a customer, sourced from the customer dimension table.
+        description: Foreign key referencing dim_customers.
         data_type: number
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_key
+
       - name: order_date
-        description: The date when the sales order was placed.
+        description: Date when the order was placed.
         data_type: date
-      - name: shiping_date
-        description: The date when the sales order was shipped to the customer.
+
+      - name: shipping_date
+        description: Date when the order was shipped.
         data_type: date
+
       - name: due_date
-        description: The date by which the payment for the sales order is due.
+        description: Payment due date.
         data_type: date
+
       - name: sales_amount
-        description: The total revenue generated from the sale of products in a specific order.
+        description: Total sales revenue of the order.
         data_type: number
+
       - name: quantity
-        description: The number of units of a product sold in a specific order.
+        description: Quantity of products sold.
         data_type: number
+
       - name: price
-        description: The cost per unit of the product sold in a specific order.
+        description: Unit price of the product.
         data_type: number

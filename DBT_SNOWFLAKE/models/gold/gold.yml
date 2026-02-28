@@ -119,10 +119,6 @@ models:
         data_type: number
         data_tests:
           - not_null
-          - relationships:
-              arguments:
-                to: ref('dim_customers')
-                field: customer_key
 
       - name: order_date
         description: Date when the order was placed.

@@ -38,8 +38,8 @@ models:
       - name: create_date
         description: The date when the customer record was created in the CRM system.
         data_type: date
-  - name: dim_proudacts
-    description: The dim_proudact model is a dimensional table that provides detailed information about products. It combines data from the CRM product information and ERP category tables to create a comprehensive view of product attributes, including product ID, name, category, subcategory, maintenance status, cost, product line, and start date. The model filters out products with an end date and assigns a unique key to each product for identification.
+  - name: dim_products
+    description: The dim_products model is a dimensional table that provides detailed information about products. It combines data from the CRM product information and ERP category tables to create a comprehensive view of product attributes, including product ID, name, category, subcategory, maintenance status, cost, product line, and start date. The model filters out products with an end date and assigns a unique key to each product for identification.
     columns:
       - name: proudact_key
         description: A unique sequential key generated for each product based on its start date and product key.

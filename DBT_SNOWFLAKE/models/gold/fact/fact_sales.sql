@@ -9,7 +9,7 @@ SELECT
     sd.SLS_QUANTITY AS QUANTITY,
     sd.SLS_PRICE AS PRICE
 FROM {{ ref('silver_crm_sales_details') }} sd
-LEFT JOIN {{ ref('dim_proudacts') }} pr
+LEFT JOIN {{ ref('dim_products') }} pr
 ON sd.SLS_PRD_KEY = pr.PROUDACT_NUMBER
 LEFT JOIN {{ ref('dim_customers') }} cu
 ON sd.SLS_CUST_ID = cu.CUSTOMER_ID

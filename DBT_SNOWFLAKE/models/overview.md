@@ -4,6 +4,6 @@
 Welcome to the **Data Warehouse and Analytics Project** repository! 🚀  
 This project demonstrates a comprehensive data warehousing and analytics solution, from building a data warehouse to generating actionable insights. Designed as a portfolio project, it highlights industry best practices in data engineering and analytics.
 Here is the schema of our input data:
-![input schema](assets/data_model.png)
+![data_model](/docs/data_model.png)
 
 {% enddocs %}

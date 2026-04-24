@@ -3,12 +3,12 @@
 Welcome to the **Data Warehouse and Analytics Project** repository! 🚀  
 This project demonstrates a comprehensive data warehousing and analytics solution, from building a data warehouse to generating actionable insights. Designed as a portfolio project, it highlights industry best practices in data engineering and analytics.
 ---
-![data_flow_diagram](/snowflake-data-warehouse-project/docs/data_flow_diagram.png)
+![data_flow_diagram](/docs/data_flow_diagram.png)
 ---
 ## 🏗️ Data Architecture
 
 The data architecture for this project follows Medallion Architecture **Bronze**, **Silver**, and **Gold** layers:
-![data_architectuer](/snowflake-data-warehouse-project/docs/data_architecture.drawio.jpg)
+![data_architectuer](/docs/data_architecture.drawio.jpg)
 
 
 1. **Bronze Layer**: Stores raw data as-is from the source systems. Data is ingested from CSV Files into Snowflake.
@@ -116,25 +116,5 @@ This project is licensed under the [MIT License](LICENSE). You are free to use, 
 
 - 🔭 I’m a **Data &  Analytics Engineer**
 
-- 💬 LinkedIn **https://www.linkedin.com/in/mosab-ali-9a98b4321**
+- 💬 LinkedIn **https://www.linkedin.com/in/mosab-ali-9a98b4321
 
-
-
-
-
-
-
-
-
-
-
-<h3 align="left">Languages and Tools:</h3>
-<p align="left"> 
-  <a href="https://aws.amazon.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="aws" width="40" height="40"/> </a> 
-  <a href="https://cloud.google.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg" alt="gcp" width="40" height="40"/> </a> 
-  <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a> 
-  <a href="https://www.linux.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="40" height="40"/> </a> 
-  <a href="https://www.microsoft.com/en-us/sql-server" target="_blank" rel="noreferrer"> <img src="https://www.svgrepo.com/show/303229/microsoft-sql-server-logo.svg" alt="mssql" width="40" height="40"/> </a> 
-  <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a> 
-  <a href="https://www.postgresql.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="postgresql" width="40" height="40"/> </a> 
-  <a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/> </a><a href="https://www.snowflake.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/snowflake/snowflake-icon.svg" alt="snowflake" width="40" height="40"/> </a><a href="https://www.getdbt.com/" target="_blank" rel="noreferrer"> <img src="https://images.seeklogo.com/logo-png/43/2/dbt-logo-png_seeklogo-431111.png" alt="dbt" width="40" height="40"/> </a>

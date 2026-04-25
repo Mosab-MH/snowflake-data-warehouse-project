@@ -1,8 +1,11 @@
 name: 'DBT_SNOWFLAKE'
 version: '1.0.0'
 
-
 profile: 'DBT_SNOWFLAKE'
+
+flags:
+  static_analysis: true
+# ---------------------------
 
 model-paths: ["models"]
 analysis-paths: ["analyses"]
@@ -12,15 +15,14 @@ macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 asset-paths: ["assets"]
 
-clean-targets:        
+clean-targets:         
   - "target"
   - "dbt_packages"
 
-
-
 models:
   DBT_SNOWFLAKE:
-  
+    +static_analysis: strict 
+    
     bronze:
       +materialized: table  
       +schema: bronze
